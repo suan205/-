@@ -1,4 +1,4 @@
-/*  登录页 + 注册页样式共用） */
+/* 登录页 + 注册页样式（login.html / register.html 共用） */
 
 .auth-page{
   position:relative;
@@ -36,25 +36,24 @@
 .auth-switch{
   margin:20px 0 0;
   font-size:13px;
-  color:var(--ink-soft);
+  color:#a8778f;
   text-align:center;
 }
 
 .auth-switch a{
   margin-left:6px;
-  color:var(--pink-600);
+  color:#e9558d;
   text-decoration:none;
-  border-bottom:2px solid var(--pink-200);
+  border-bottom:2px solid #ffd3e6;
   padding-bottom:1px;
 }
 
 .auth-switch a:hover{
-  border-bottom-color:var(--pink-400);
+  border-bottom-color:#ff8fba;
 }
 
-
 .register-card{
-  max-width:600px;
+  max-width:560px;
 }
 
 .register-card .pixel-title{
@@ -62,8 +61,4 @@
   letter-spacing:.12em;
 }
 
-@media (max-width:560px){
-  .auth-card .pixel-title{font-size:26px;}
-  .register-card .pixel-title{font-size:22px;}
-  .peek{display:none;}
-}
+

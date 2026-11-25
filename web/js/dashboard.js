@@ -6,7 +6,7 @@
 import { getCurrentUser } from "./api.js";
 import { getToken, clearToken, goLogin, maskToken, formatTime } from "./auth.js";
 
-const avatar = document.getElementById("avatar");
+
 const nameEl = document.getElementById("username");
 const stateEl = document.getElementById("state");
 const tipEl = document.getElementById("dash-tip");
@@ -31,8 +31,7 @@ function setTip(message, type = "") {
 
 /** 把用户信息渲染到页面上 */
 function render(user) {
-  const initial = (user.username || "U").slice(0, 1).toUpperCase();
-  avatar.textContent = initial;
+  
   nameEl.textContent = user.username;
 
   infoUsername.textContent = user.username;
