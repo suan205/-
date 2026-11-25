@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户登录 · 像素小屋</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <main class="auth-page">
+        <section class="pixel-card auth-card">
+            <h1 class="pixel-title">用户登录</h1>
+
+            <form class="auth-form" id="login-form" novalidate>
+                <div class="field">
+                    <label class="field-label" for="account">账号</label>
+                    <input
+                        class="pixel-input"
+                        id="account"
+                        name="account"
+                        type="text"
+                        autocomplete="username"
+                        placeholder="请输入用户名或邮箱"
+                        maxlength="254">
+                </div>
+
+                <div class="field">
+                    <label class="field-label" for="password">密码</label>
+                    <input
+                        class="pixel-input"
+                        id="password"
+                        name="password"
+                        type="password"
+                        autocomplete="current-password"
+                        placeholder="请输入密码"
+                        maxlength="128">
+                    <button class="peek" id="peek" type="button">显示</button>
+                </div>
+
+                <p class="form-tip" id="login-tip">登录后进入个人主页。</p>
+
+                <div class="auth-actions">
+                    <button class="pixel-btn wide" id="login-btn" type="submit">登 录</button>
+                </div>
+            </form>
+
+            <p class="auth-switch">
+                还没有账号？<a href="register.html">去注册</a>
+            </p>
+        </section>
+    </main>
+
+    <script type="module" src="js/login.js"></script>
+</body>
+</html>

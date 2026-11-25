@@ -1,0 +1,69 @@
+/*  登录页 + 注册页样式共用） */
+
+.auth-page{
+  position:relative;
+  z-index:1;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:48px 20px;
+}
+
+.auth-card{
+  width:100%;
+  max-width:560px;
+}
+
+.auth-card .pixel-title{
+  display:block;
+  margin:0 0 30px;
+  font-size:34px;
+  text-align:center;
+}
+
+.auth-form{
+  margin:0;
+}
+
+.auth-actions{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  margin-top:28px;
+}
+
+.auth-switch{
+  margin:20px 0 0;
+  font-size:13px;
+  color:var(--ink-soft);
+  text-align:center;
+}
+
+.auth-switch a{
+  margin-left:6px;
+  color:var(--pink-600);
+  text-decoration:none;
+  border-bottom:2px solid var(--pink-200);
+  padding-bottom:1px;
+}
+
+.auth-switch a:hover{
+  border-bottom-color:var(--pink-400);
+}
+
+
+.register-card{
+  max-width:600px;
+}
+
+.register-card .pixel-title{
+  font-size:30px;
+  letter-spacing:.12em;
+}
+
+@media (max-width:560px){
+  .auth-card .pixel-title{font-size:26px;}
+  .register-card .pixel-title{font-size:22px;}
+  .peek{display:none;}
+}

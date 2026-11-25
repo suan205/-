@@ -1,0 +1,5 @@
+INFO:     Started server process [1664]
+INFO:     Waiting for application startup.
+INFO:     SQLite 数据库：C:\Users\asus\Downloads\auth-starter\auth-starter\data\app.db
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)

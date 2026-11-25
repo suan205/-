@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API 测试台 · 登录注册接口</title>
+  <link rel="stylesheet" href="/web/css/test.css" />
+</head>
+<body>
+  <!--
+    ============================================================================
+    API 测试页（只用于调试接口，不是最终业务页面）
+    ----------------------------------------------------------------------------
+    这个页面可以调用全部接口，用来确认字段、Token 和错误码。
+    推荐流程：
+      1. 双击 start.bat，打开 http://127.0.0.1:8000/test
+      2. 点左侧按钮或“测试核心流程”，观察请求和响应
+      3. 先填写 web/index.html 首页，再创建 login.html、register.html、dashboard.html 等页面
+      4. 页面通过 http://127.0.0.1:8000/web/login.html 访问
+      5. 测试页本身不用作最终作业，不要直接改它交上去
+    文件位置：web/test.html
+    ============================================================================
+  -->
+  <div class="shell">
+    <header class="hero">
+      <div class="hero-row">
+        <span class="eyebrow">API TEST CONSOLE · 接口测试台</span>
+        <a class="doc-link" id="docs-link" href="/docs" target="_blank" rel="noreferrer">Swagger 文档 ↗</a>
+      </div>
+      <h1>API测试页面</h1>
+      <p>
+        这是 API 测试页，不是最终登录注册页。确认字段和流程后，
+        先填写 <code>web/index.html</code> 首页，再创建登录、注册和个人主页等页面，
+        通过 <code>/web/login.html</code> 访问；不要直接改这个测试页交作业。
+      </p>
+      <div class="hero-meta">
+        <span class="dot" id="health-dot"></span>
+        <span id="health-text">正在检查后端…</span>
+        <span class="sep">·</span>
+        <span>接口地址 <code id="api-base-display">—</code></span>
+        <span class="sep">·</span>
+        <span id="token-status">未保存 Token</span>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="left">
+        <article class="card">
+          <div class="card-head">
+            <div class="card-title">
+              <span class="method get">GET</span>
+              <h2>系统检查</h2>
+            </div>
+            <p>确认服务活着，并读取 API 信息。</p>
+          </div>
+          <div class="row">
+            <button class="btn primary" id="btn-health" type="button">检查 /api/health</button>
+            <button class="btn ghost" id="btn-root" type="button">读取 /</button>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <div class="card-title">
+              <span class="method post">POST</span>
+              <h2>注册</h2>
+            </div>
+            <p>注册成功会自动保存 Token；空字段或短密码可测试后端 422。</p>
+          </div>
+          <form class="form" id="register-form" novalidate>
+            <label>用户名
+              <input id="reg-username" type="text" maxlength="32" autocomplete="username"
+                     placeholder="3-32 位字母、数字或下划线" />
+            </label>
+            <label>邮箱
+              <input id="reg-email" type="email" maxlength="254" autocomplete="email"
+                     placeholder="you@example.com" />
+            </label>
+            <label>密码
+              <input id="reg-password" type="password" maxlength="128" autocomplete="new-password"
+                     placeholder="至少 8 位；故意填短可以测试 422" />
+            </label>
+            <div class="row">
+              <button class="btn primary" type="submit">注册</button>
+              <button class="btn ghost" id="btn-random" type="button">随机填一个</button>
+            </div>
+          </form>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <div class="card-title">
+              <span class="method post">POST</span>
+              <h2>登录</h2>
+            </div>
+            <p><code>account</code> 可以填邮箱，也可以填用户名。</p>
+          </div>
+          <form class="form" id="login-form">
+            <label>邮箱或用户名
+              <input id="login-account" type="text" maxlength="254" autocomplete="username"
+                     placeholder="you@example.com 或 alice_01" />
+            </label>
+            <label>密码
+              <input id="login-password" type="password" maxlength="128" autocomplete="current-password"
+                     placeholder="请输入密码" />
+            </label>
+            <button class="btn primary" type="submit">登录</button>
+          </form>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <div class="card-title">
+              <span class="method get">GET</span>
+              <h2>当前用户</h2>
+            </div>
+            <p>不填 Token 可测试 401；填入有效 Token 可获取当前用户。</p>
+          </div>
+          <label class="token-label">Access Token
+            <input id="token-input" type="text" spellcheck="false"
+                   placeholder="注册或登录后自动保存，也可以粘贴 Token" />
+          </label>
+          <p class="inline-hint">
+            请求头格式：<code>Authorization: Bearer &lt;token&gt;</code>
+          </p>
+          <div class="row">
+            <button class="btn primary" id="btn-me" type="button" disabled>获取 /api/auth/me</button>
+            <button class="btn ghost" id="btn-copy-token" type="button" disabled>复制 Token</button>
+            <button class="btn danger" id="btn-clear-token" type="button" disabled>清除 Token</button>
+          </div>
+        </article>
+
+        <article class="card flow-card">
+          <div class="card-head">
+            <div class="card-title">
+              <span class="method mix">FLOW</span>
+              <h2>一键测试核心流程</h2>
+            </div>
+            <p>健康检查 → 注册 → 登录 → 获取用户；每次会创建一个随机测试账号。</p>
+          </div>
+          <button class="btn primary wide" id="btn-run-all" type="button">▶ 测试核心流程</button>
+          <ol class="steps" id="flow-steps">
+            <li data-step="health"><span>1</span> GET /api/health</li>
+            <li data-step="register"><span>2</span> POST /api/auth/register</li>
+            <li data-step="login"><span>3</span> POST /api/auth/login</li>
+            <li data-step="me"><span>4</span> GET /api/auth/me</li>
+          </ol>
+        </article>
+      </section>
+
+      <aside class="right">
+        <section class="result-card">
+          <div class="result-head">
+            <div>
+              <span class="eyebrow">REQUEST &amp; RESPONSE</span>
+              <h2 id="result-title">等待请求</h2>
+            </div>
+            <div class="result-badges">
+              <span class="status-pill" id="result-status">—</span>
+              <span class="time-pill" id="result-time">—</span>
+            </div>
+          </div>
+          <div class="result-toolbar">
+            <button class="mini" id="btn-copy-result" type="button">复制请求与响应</button>
+            <button class="mini" id="btn-clear-result" type="button">清空</button>
+          </div>
+          <pre class="result-body" id="result-body">点击左侧按钮开始测试。</pre>
+          <p class="result-hint" id="result-hint">测试台的 Token 独立保存在浏览器 localStorage，不会覆盖你的网站登录状态。</p>
+        </section>
+
+        <section class="help-card">
+          <h3>如何开始写自己的页面？</h3>
+          <ol>
+            <li>先点“测试核心流程”，确认注册、登录、/api/auth/me 都能通。</li>
+            <li>在预留的空文件 <code>web/index.html</code> 中编写网站首页（文件不存在时再新建），放置“登录”“注册”链接，分别指向同目录的 <code>login.html</code> 和 <code>register.html</code>。</li>
+            <li>再新建 <code>web/login.html</code>、<code>web/register.html</code>、<code>web/dashboard.html</code>；不要直接复制 <code>test.html</code> 当成品。</li>
+            <li>自行完成页面结构、样式和交互，CSS 和 JS 文件也放在 <code>web/</code> 下；保留现有测试页和工具文件。</li>
+            <li>使用模块脚本复用 <code>loginUser</code>、<code>registerUser</code>、<code>getCurrentUser</code>。在同级 HTML 的 <code>&lt;script type="module"&gt;</code> 内从 <code>./js/api.js</code> 引入；若写在 <code>web/js/login.js</code> 中，则从 <code>./api.js</code> 引入，并在 <code>web/login.html</code> 用 <code>&lt;script type="module" src="./js/login.js"&gt;&lt;/script&gt;</code> 加载。</li>
+            <li>保持 <code>start.bat</code> 的后端窗口运行，通过当前服务的 <code>/web/</code> 地址进入首页（默认 <code>http://127.0.0.1:8000/web/</code>，改端口时同步替换）；不要双击 HTML 或使用 Live Server。修改 HTML/CSS/JS 后保存并刷新浏览器即可，无需重启服务。</li>
+            <li>登录 / 注册成功后，将函数返回值记为 <code>auth</code>，用 <code>localStorage.setItem("access_token", auth.access_token)</code> 保存 Token，再跳到 <code>dashboard.html</code>。API 工具不会自动保存自定义网站的 Token 或跳转页面。</li>
+            <li>在 dashboard 中读取 Token，调用 <code>getCurrentUser(token)</code> 获取用户信息；没有 Token 或返回 401 时清除本地 Token 并返回登录页。退出登录时删除 <code>access_token</code> 并跳回登录页。前端跳转只控制页面体验，用户数据由后端鉴权保护。</li>
+          </ol>
+          <p>测试页文件：<code>web/test.html</code>；测试页逻辑：<code>web/js/test.js</code>；通用 API：<code>web/js/api.js</code>。</p>
+          <p class="help-note">
+            测试页只用来调接口，不要把它直接当成最终登录页。
+            所有页面都在同一个服务下。测试台使用独立的 Token 存储，不会覆盖你的网站登录状态。当 <code>web/index.html</code> 有内容时，下次运行 start.bat 会自动打开 <code>/web/</code>；文件不存在或为空时打开 <code>/test</code>。服务运行期间，写好首页后可直接访问 <code>/web/</code>。
+          </p>
+        </section>
+      </aside>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    if (location.protocol === "file:") {
+      document.getElementById("result-hint").textContent =
+        "请勿双击 HTML：用 start.bat 启动后访问 http://127.0.0.1:8000/test（自定义端口时替换端口）。";
+      document.getElementById("health-text").textContent = "请先通过 start.bat 启动服务";
+    }
+  </script>
+  <script type="module" src="/web/js/test.js"></script>
+</body>
+</html>

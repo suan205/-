@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的主页 · 像素小屋</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <main class="dash">
+        <section class="pixel-card dash-card">
+            <div class="dash-head">
+                <span class="avatar" id="avatar">U</span>
+                <div>
+                    <p class="dash-hi">欢迎回来</p>
+                    <h1 class="pixel-title dash-name" id="username">加载中…</h1>
+                </div>
+            </div>
+
+            <p class="dash-sub" id="state">正在通过 /api/auth/me 校验登录状态…</p>
+
+            <dl class="dash-info">
+                <div>
+                    <dt>用户名</dt>
+                    <dd id="info-username">—</dd>
+                </div>
+                <div>
+                    <dt>邮箱</dt>
+                    <dd id="info-email">—</dd>
+                </div>
+                <div>
+                    <dt>用户 ID</dt>
+                    <dd id="info-id">—</dd>
+                </div>
+                <div>
+                    <dt>注册时间</dt>
+                    <dd id="info-created">—</dd>
+                </div>
+                <div>
+                    <dt>Token</dt>
+                    <dd id="info-token">—</dd>
+                </div>
+            </dl>
+            <div class="dash-actions">
+                <button class="pixel-btn" id="refresh-btn" type="button">重新校验</button>
+                <button class="pixel-btn ghost" id="logout-btn" type="button">退出登录</button>
+            </div>
+
+            <p class="form-tip" id="dash-tip"></p>
+        </section>
+    </main>
+    <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>

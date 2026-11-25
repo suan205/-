@@ -1,0 +1,205 @@
+
+
+:root{
+  --pink-50:#fff8fb;
+  --pink-100:#ffeaf4;
+  --pink-200:#ffd3e6;
+  --pink-300:#ffb6d5;
+  --pink-400:#ff8fba;
+  --pink-500:#ff6fa8;
+  --pink-600:#e9558d;
+  --ink:#7d4a63;
+  --ink-soft:#a8778f;
+}
+
+*{box-sizing:border-box;}
+
+body{
+  margin:0;
+  min-height:100vh;
+  color:var(--ink);
+  font-family:"Zpix","Fusion Pixel 12px","Silkscreen","Microsoft YaHei","Segoe UI",system-ui,sans-serif;
+  letter-spacing:.03em;
+
+  background-color:#ffeef6;
+  background-image:url("../img/login-bg.png");
+  background-position:center center;
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ------------------------- 像素卡片 ------------------------- */
+
+.pixel-card{
+  position:relative;
+  background:#fffdfe;
+  border:4px solid var(--pink-300);
+  padding:38px 44px;
+  box-shadow:
+    0 0 0 4px #fff6fa,
+    0 12px 0 rgba(255,143,186,.22),
+    inset 0 0 0 3px #ffe4f0;
+}
+
+/* 四角小方块，模仿像素贴纸的直角处理 */
+.pixel-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(#ffc2da,#ffc2da) left top / 8px 8px no-repeat,
+    linear-gradient(#ffc2da,#ffc2da) right top / 8px 8px no-repeat,
+    linear-gradient(#ffc2da,#ffc2da) left bottom / 8px 8px no-repeat,
+    linear-gradient(#ffc2da,#ffc2da) right bottom / 8px 8px no-repeat;
+}
+
+.pixel-title{
+  margin:0;
+  font-weight:800;
+  letter-spacing:.16em;
+  color:#ff7ba9;
+  text-shadow:
+    2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff,
+    4px 4px 0 #ffcfdf;
+}
+
+/* ------------------------- 按钮 ------------------------- */
+
+.pixel-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:13px 34px;
+  font:inherit;
+  font-size:16px;
+  font-weight:700;
+  letter-spacing:.16em;
+  color:#fff;
+  text-decoration:none;
+  text-align:center;
+  cursor:pointer;
+  border:3px solid #fff;
+  border-radius:0;
+  background:linear-gradient(180deg,#ffb0cc 0%,#ff8ab8 55%,#ff70a4 100%);
+  box-shadow:0 0 0 3px var(--pink-300), 0 6px 0 #ef7fa8;
+  text-shadow:0 2px 0 rgba(214,64,124,.55);
+  transition:transform .08s ease, box-shadow .08s ease, filter .15s ease;
+}
+
+.pixel-btn:hover{filter:brightness(1.04);}
+
+.pixel-btn:active{
+  transform:translateY(4px);
+  box-shadow:0 0 0 3px var(--pink-300), 0 2px 0 #ef7fa8;
+}
+
+.pixel-btn:disabled{
+  cursor:not-allowed;
+  filter:grayscale(.25) brightness(.96);
+  box-shadow:0 0 0 3px var(--pink-200), 0 4px 0 #f3c1d6;
+}
+
+.pixel-btn.ghost{
+  color:var(--pink-600);
+  background:#fff;
+  text-shadow:none;
+  box-shadow:0 0 0 3px var(--pink-200), 0 6px 0 #ffd7e7;
+}
+
+.pixel-btn.ghost:active{
+  box-shadow:0 0 0 3px var(--pink-200), 0 2px 0 #ffd7e7;
+}
+
+.pixel-btn.wide{width:70%;max-width:280px;}
+
+/* ------------------------- 输入框 ------------------------- */
+
+.field{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  margin-bottom:18px;
+}
+
+.field-label{
+  flex:0 0 66px;
+  width:66px;
+  font-size:16px;
+  color:#8f5d76;
+  letter-spacing:.12em;
+}
+
+.pixel-input{
+  flex:1;
+  min-width:0;
+  height:46px;
+  padding:0 14px;
+  font:inherit;
+  font-size:15px;
+  letter-spacing:.05em;
+  color:var(--ink);
+  background:#fff7fb;
+  border:3px solid var(--pink-200);
+  border-radius:0;
+  outline:none;
+  box-shadow:inset 3px 3px 0 rgba(255,199,222,.45), 3px 3px 0 #fff;
+  transition:border-color .15s ease, background .15s ease;
+}
+
+.pixel-input::placeholder{color:#e4b0c8;}
+
+.pixel-input:focus{
+  border-color:var(--pink-400);
+  background:#fff;
+}
+
+.peek{
+  flex:0 0 auto;
+  padding:0 2px;
+  font:inherit;
+  font-size:13px;
+  color:var(--pink-600);
+  background:none;
+  border:0;
+  border-bottom:2px solid var(--pink-200);
+  cursor:pointer;
+  letter-spacing:.08em;
+}
+
+/* ------------------------- 提示文字 ------------------------- */
+
+.form-tip{
+  min-height:22px;
+  margin:14px 0 0;
+  font-size:13px;
+  line-height:1.6;
+  letter-spacing:.04em;
+  color:var(--ink-soft);
+}
+
+.form-tip.error{color:#d9457c;}
+.form-tip.ok{color:#2f9e73;}
+
+
+
+/* ------------------------- 其他 ------------------------- */
+
+code{
+  padding:2px 6px;
+  font-size:.92em;
+  color:#c34f80;
+  background:#fff2f8;
+  border:2px solid var(--pink-100);
+}
+
+@media (max-width:560px){
+  .pixel-card{padding:28px 22px;}
+  .field{gap:10px;}
+  .field-label{flex-basis:56px;width:56px;font-size:14px;}
+  .pixel-btn{padding:12px 22px;font-size:15px;}
+  .pixel-btn.wide{width:100%;}
+}
